@@ -1,7 +1,24 @@
 import requests
 from bs4 import BeautifulSoup
-from playwright.sync_api import sync_playwright
 import re
+
+def main(url_input):
+    output_dict = dict()
+
+    spec_dict = get_specs(url_input)
+
+    if 'Model' in spec_dict:
+        output_dict['model'] = spec_dict['Model']
+    else:
+        output_dict['model'] = get_model_from_overview(url_input)
+
+    if 'UPC' in spec_dict:
+        output_dict['upc'] = spec_dict['UPC']
+
+    output_dict['title'] = get_title(url_input)
+
+    return output_dict
+
 
 def get_html(url_input):
     req = requests.get(url_input)
@@ -66,7 +83,7 @@ def get_model_from_overview(url_input):
     elements = []
 
     # Get list of all paragraphs
-    for elem in soup(text=re.compile(r".*Style:.*")):
+    for elem in soup(string=re.compile(r".*Style:.*")):
         elements.append(elem)
 
 
@@ -76,14 +93,31 @@ def get_model_from_overview(url_input):
 
     string_output = re.compile(r"[^\w\s]").sub("",string_output)
 
-    print(string_output)
+    return string_output
 
-    return model
+def get_title(url_input):
+    '''
+    Gets title from the a product from shop my exchange
+        Parameters:
+            url_input of product from shop my exchange
+
+        Returns:
+            string
+    '''
+
+    # Get html
+    soup = get_html(url_input)
+
+    # Parse out title
+    title = soup.title.getText().split("|")[0]
+
+    return title
 
 if __name__ == "__main__":
     url = 'https://www.shopmyexchange.com/samsung-50-in-qled-frame-4k-smart-tv-class-ls03b-qn50ls03bafxza/3182106'
-    url = 'https://www.shopmyexchange.com/ninja-professional-plus-blender-with-auto-iq/2392119'
-    url = 'https://www.shopmyexchange.com/nike-men-s-revolution-6-running-shoes/2724994'
+    # url = 'https://www.shopmyexchange.com/ninja-professional-plus-blender-with-auto-iq/2392119'
+    # url = 'https://www.shopmyexchange.com/nike-men-s-revolution-6-running-shoes/2724994'
 
-    print(get_specs(url))
-    print(get_model_from_overview(url))
+    print(main(url))
+    # print(get_model_from_overview(url))
+    # print(get_title(url))
