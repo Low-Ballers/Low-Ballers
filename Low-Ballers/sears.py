@@ -93,5 +93,5 @@ if __name__ == '__main__':
         "brand": "Nike"
     }
 
-    # print(get_price(ninja))
-    print(get_price(nike))
+    print(get_price(ninja))
+    #print(get_price(nike))
