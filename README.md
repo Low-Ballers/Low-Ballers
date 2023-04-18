@@ -28,3 +28,15 @@ N/A
 
 ## Tests
 
+## Setup
+
+# These are the potential 
+
+pip3: pip3 install 23.1
+
+# CLI 
+typer:  pip3 install "typer[all]"
+parser: pip install url-parser
+
+# https://typer.tiangolo.com/
+# includes rich 
