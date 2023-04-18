@@ -4,32 +4,35 @@ import re
 import time
 from playwright.sync_api import sync_playwright
 
-
 def get_price(product_dict):
     price = get_product_page(product_dict)
     return price
 
 def get_product_page(product_dict):
+
     if 'upc' in product_dict:
         soup = get_html(f"https://www.target.com/s?searchTerm={product_dict['upc']}")
-        if soup:
-            products = soup.find_all(attrs={"data-test": "current-price"})
-            if len(products) == 1:
-                return products[0].text
+
+        result_dict = check_single_product(soup)
+
+        if result_dict:
+            return result_dict
 
     if 'model' in product_dict:
         soup = get_html(f"https://www.target.com/s?searchTerm={product_dict['model']}")
-        if soup:
-            products = soup.find_all(attrs={"data-test": "current-price"})
-            if len(products) == 1:
-                return products[0].text
+
+        result_dict = check_single_product(soup)
+
+        if result_dict:
+            return result_dict
 
     if 'title' in product_dict:
         soup = get_html(f"https://www.target.com/s?searchTerm={product_dict['title']}")
-        if soup:
-            products = soup.find_all(attrs={"data-test": "current-price"})
-            if len(products) == 1:
-                return products[0].text
+
+        result_dict = check_single_product(soup)
+
+        if result_dict:
+            return result_dict
 
     else:
         return None
@@ -61,6 +64,22 @@ def get_html(url_input):
 
     return soup
 
+def check_single_product(soup):
+    result_dict = dict()
+
+    if soup:
+        products = soup.find_all(attrs={"data-test": "current-price"})
+        if len(products) == 1:
+            result_dict['price'] = products[0].text
+
+            products = soup.find('a', href=True)
+            result_dict['url'] = 'https://www.target.com' + products['href']
+
+            return result_dict
+
+    else:
+        return None
+
 if __name__ == '__main__':
     tv = {
         "upc": "887276625447",
@@ -79,6 +98,6 @@ if __name__ == '__main__':
         "brand": "Nike"
     }
 
-    # print(get_price(tv))
+    print(get_price(tv))
     # print(get_price(ninja))
-    print(get_price(nike))
+    # print(get_price(nike))
