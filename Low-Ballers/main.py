@@ -1,5 +1,7 @@
 
-from urllib.parse import urlparse
+
+from email_gen import data_email
+
 
 
 url = "https://www.shopmyexchange.com/apple-11-in-512gb-ipad-pro-with-wi-fi-only/3437062"
@@ -103,7 +105,7 @@ def search_successful():
     print(f"Amazon price: {amazon}, url")
     user_price = lowest_price(bestbuy, sears, target)
     print(f"The best price for your search based on all the retail stores was {user_price}")
-    print(f"Press 'X' to send a copy to my email, 'Q' to quit,  'N' for new search")
+    print(f"Press 'X' to get a copy of your search results, 'Q' to quit,  'N' for new search")
     user_input = input(">")
     if user_input.lower() == "x":
         data_email()
@@ -116,7 +118,7 @@ def search_successful():
 
 
 
-def lowest_price(a,b,c,d,e):
+def lowest_price(a,b,c,):
 
     if a <= b and a <= c:
         return a
@@ -164,8 +166,6 @@ def quit():
 ------------------------------------
     ''')
 
-def data_email():
-    pass
 
 if __name__ == "__main__":
     intro()
