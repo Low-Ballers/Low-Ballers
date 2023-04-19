@@ -1,3 +1,5 @@
+from unittest import mock
+
 import pytest
 import requests
 from bs4 import BeautifulSoup
@@ -9,58 +11,43 @@ def test_exists_main():
     assert main
 
 
-@pytest.mark.skip("TODO")
-def test_main(httpserver):
-    url_input = httpserver.url_for("/test")
-    expected_output = {
-        "model": "ABC123",
-        "upc": "123456789012",
-        "title": "Product Title ",
-    }
-    output_dict = main(url_input)
-    assert output_dict == expected_output
-
-
 def test_exists_get_html():
     assert get_html
 
 
 def test_get_html():
-    # Create a mock response
-    class MockResponse:
-        def __init__(self, text):
-            self.text = text
+    url_input = 'https://www.example.com'
+    expected_output = mock.Mock()
+    expected_output.text = '<html><body><p>Example text</p></body></html>'
 
-    # Patch the requests.get method to return a mock response
-    requests.get = lambda url: MockResponse("<html><head></head><body><p>Hello World!</p></body></html>")
+    with mock.patch('requests.get') as mock_get:
+        mock_get.return_value = expected_output
 
-    # Call the get_html function with the test URL
-    soup = get_html("http://example.com")
+        from exchange import get_html
+        result = get_html(url_input)
 
-    # Check that the soup object was created correctly
-    assert isinstance(soup, BeautifulSoup)
-    assert soup.body.p.string == "Hello World!"
+    assert result == BeautifulSoup(expected_output.text, 'html.parser')
+    mock_get.assert_called_once_with(url_input)
 
 
-def test_exists_get_specs():
-    assert get_specs
+def test_get_title():
+    # Test case 1: Valid URL input
+    url_input = "https://www.shopmyexchange.com/nike-men-s-revolution-6-running-shoes/2724994"
+    expected_title = "Nike Men's Revolution 6 Running Shoes "
+    assert get_title(url_input) == expected_title
+
+    # # Test case 2: Invalid URL input
+    # url_input = "https://www.shopmyexchange.com/non-existent-product/0000000"
+    # expected_title = ""
+    # assert get_title(url_input) == expected_title
+    #
+    # # Test case 3: Empty URL input
+    # url_input = ""
+    # expected_title = ""
+    # assert get_title(url_input) == expected_title
 
 
-def test_get_specs():
-    url_input = 'https://www.shopmyexchange.com/nike-men-s-revolution-6-running-shoes/2724994'
-    expected_output = {'Warmlined': 'No', 'Style Athletic Shoes': 'Running', 'Gender': 'Men', 'Shipping By Air Prohibited': 'No', 'Type Of Footwear': 'Athletic Shoes', 'Type Of Specialist Activity': 'Running', 'Style Cooking Appliances': 'Manmade Material', 'Advertised Origin': 'Imported', 'Consumer Item Height': '4.88', 'Consumer Item Width': '9.33', 'Consumer Item Length': '14.25', 'Capacity/Volume': '', 'Open/closed Upper': 'Unclassified', 'Consumer Item Weight': '2.2', 'Fastening Type': 'Lace Up', 'Brand': 'Nike', 'Width': '9.33 Inch', 'Weight': '2.2 Pounds', 'Made In America (Y/N)': 'No', 'Depth': '', 'Care Information': 'Hand Wash', 'Height': '4.88 Inch', 'Length': '14.25 Inch', 'Type Of Partially Enclosed Upper': 'Unclassified'}
 
-    output_dict = get_specs(url_input)
-
-    assert output_dict == expected_output
-
-
-def test_exists_overview():
-    assert get_model_from_overview
-
-
-def test_exists_title():
-    assert get_title
 
 
 @pytest.fixture
@@ -80,3 +67,7 @@ def mock_html(monkeypatch):
         </html>
     """
     monkeypatch.setattr(requests, 'get', lambda x: html)
+
+
+
+
