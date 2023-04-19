@@ -2,8 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 
 def get_price(product_dict):
+    product_info = dict()
     # Get html
-    soup = get_product_page(product_dict)
+    soup, url = get_product_page(product_dict)
+    product_info['url'] = url
 
     # Check to see if this is the final product page.  If not, return None
     if soup is None:
@@ -16,8 +18,9 @@ def get_price(product_dict):
 
     for item in products:
         price = item.text
+    product_info['price'] = price
 
-    return price
+    return product_info
 
 def get_search(product_dict):
     soup = get_html(f"https://www.walmart.com/search?q={product_dict['model']}")
@@ -32,7 +35,7 @@ def get_product_page(product_dict):
         link = link['href']
         product_urls.append(f'https://www.walmart.com{link}')
     soup = get_html(product_urls[0])
-    return soup
+    return soup, product_urls[0]
 
 def get_html(url_input):
     proxy_params = {
