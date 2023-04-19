@@ -35,7 +35,7 @@ def get_product_page(product_dict):
             return result_dict
 
     else:
-        return None
+        return None, None
 
 def get_html(url_input):
     with sync_playwright() as p:

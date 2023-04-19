@@ -45,7 +45,7 @@ def get_product_page(product_dict):
             if len(products) == 0:
                 return soup, url
     else:
-        return None
+        return None, None
 
 def get_html(url_input):
     with sync_playwright() as p:
