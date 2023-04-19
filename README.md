@@ -10,7 +10,7 @@ Tre Sanders
 
 ## Description:
 
-Application that searches and compares prices of x number of similar store websites and returns price / difference.
+Application that searches and compares prices of x number of similar store websites and returns the price.
 
 ## Links and Resources
 N/A
@@ -27,4 +27,24 @@ Install per requirements.txt
 N/A
 
 ## Tests
+[]()
 
+
+
+## Setup
+
+## Link to Code
+
+[]()
+
+
+# These are the potential 
+
+pip3: pip3 install 23.1
+
+# CLI 
+typer:  pip3 install "typer[all]"
+parser: pip install url-parser
+
+# https://typer.tiangolo.com/
+# includes rich 
