@@ -3,9 +3,13 @@
 ## Team Members: 
 
 Dominick Martin
-Ethan Alblers
+
+Ethan Albers
+
 Mike Shen
+
 Sheldon Pierce
+
 Tre Sanders
 
 ## Description:
