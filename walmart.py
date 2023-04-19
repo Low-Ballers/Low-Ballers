@@ -21,22 +21,13 @@ def get_price(product_dict):
 
 def get_search(product_dict):
     search_dict = dict()
-    if 'upc' in product_dict:
-        soup = get_html(f"https://www.walmart.com/search={product_dict['upc']}")
+    soup = get_html(f"https://www.walmart.com/search?q={product_dict['model']}")
+    search_results = soup.find_all(attrs={'class':['mb0', 'ph1', 'pa0-xl', 'bb', 'b--near-white', 'w-25']})
+    return search_results
 
-
-    elif 'model' in product_dict:
-        soup = get_html(f"https://www.walmart.com/search={product_dict['model']}")
-        products = soup.find_all('app-product-card')
-        if len(products) == 0:
-            return soup
-    elif 'title' in product_dict:
-        soup = get_html(f"https://www.walmart.com/search={product_dict['title']}")
-        products = soup.find_all('app-product-card')
-        if len(products) == 0:
-            return soup
-    else:
-        return None
+def get_product_page(product_table):
+    search_results = get_search(product_dict)
+    return search_results
 
 def get_html(url_input):
     proxy_params = {
