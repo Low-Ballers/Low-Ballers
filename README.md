@@ -43,8 +43,13 @@ N/A
 pip3: pip3 install 23.1
 
 # CLI 
-typer:  pip3 install "typer[all]"
-parser: pip install url-parser
+pip install pytest
+pip install beautifulsoup4
+pip install pytest-playwright
+playwright install
+pip freeze > requirements.txt
+
+
 
 # https://typer.tiangolo.com/
 # includes rich 

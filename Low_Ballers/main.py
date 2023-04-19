@@ -1,11 +1,12 @@
 
-from email_gen import data_email
-#from exchange import get_title
+from Low_Ballers.email_gen import data_email
+from Low_Ballers.exchange import exchange_main
+from Low_Ballers.sears import get_price as get_price_sears
+from Low_Ballers.target import get_price as get_price_target
 
 product_price = 0
 user_input = ''
-
-url = "https://www.shopmyexchange.com/apple-11-in-512gb-ipad-pro-with-wi-fi-only/3437062"
+url = ''
 
 def intro():
 
@@ -68,17 +69,23 @@ def intro():
 
 def prompt_for_input():
     global product_price
+    global url
+    global user_input
     print("Please enter the ShopMyExchange URl for the product you will like to search")
     print("Ex https://www.shopmyexchange.com/apple-11-in-512gb-ipad-pro-with-wi-fi-only/3437062")
     user_input = input("Enter URL Here >")
-    if user_input.lower() != url:
+    url = user_input
+    #regex validate url
+    if user_input.lower() != '' and False:
         search_failed()
 
     else:
-        user_input.lower() == url
         print("Please enter the price of the product you have entered")
         price_input = input("Enter price of the product, ex $49.99 > $")
-        product_price = float(price_input)
+        # regex validate url
+        if type(price_input) == float:
+            search_failed()
+        product_price = price_input
         search_successful()
         breakpoint()
 def search_failed():
@@ -98,22 +105,24 @@ def search_failed():
 def search_successful():
     global product_price
     global user_input
-    #title = get_title(user_input)
+    global url
+    exchange_get = exchange_main(url)
+    title = exchange_get['title']
     print("Please wait while we search for you......")
-    print(f" Your product was Ninja Blender 298z at the price of {product_price}")
+    print(f" Your product was {title} at the price of {product_price}")
     print("We were able to find the following matches for the best price :")
     # if price comes back at not available , s
     bestbuy = 69.99
-    sears = 59.99
-    target = 58.99
+    sears = get_price_sears(exchange_get)
+    target = get_price_target(exchange_get)
     amazon = 75.00
     walmart = 45.99
     print(f"Best buy price:{bestbuy}, url")
-    print(f"Sears price:{sears}, url")
-    print(f"Target price:{target}, url")
+    print(f"Sears price:{sears['price']},{sears['url']}")
+    print(f"Target price:{target['price']}, {target['url']}")
     print(f"Walmart price: {walmart}, url")
     print(f"Amazon price: {amazon}, url")
-    user_price = lowest_price(bestbuy, sears, target, amazon, walmart, product_price)
+    user_price = lowest_price(bestbuy, sears['price'], target, amazon, walmart, product_price)
     print(f"The best price for your search based on all the retail stores was {user_price}")
     print(f"Press 'X' to get a copy of your search results, 'Q' to quit,  'N' for new search")
     user_input = input(">")
