@@ -28,7 +28,11 @@ def get_search(model):
     return search_results
 
 def get_product_page(product_dict):
-    search_results = get_search(product_dict['model'])
+    if 'model' in product_dict.keys():
+        model = product_dict['model']
+    else:
+        model = product_dict['title']
+    search_results = get_search(model)
     product_urls = []
     for result in search_results:
         link = result.find('a')
@@ -66,5 +70,7 @@ if __name__ == '__main__':
         "brand": "Nike"
     }
 
+    apple = {'model': 'MNXH3LL/A', 'title': 'Apple 11 In. 512gb Ipad Pro With Wi-fi Only '}
     # print(get_price(ninja))
-    print(get_price(tv))
+    print(get_price(apple))
+
