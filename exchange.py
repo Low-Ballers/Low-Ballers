@@ -113,12 +113,13 @@ def get_title(url_input):
 
     return title
 
+
 if __name__ == "__main__":
     # url = 'https://www.shopmyexchange.com/samsung-50-in-qled-frame-4k-smart-tv-class-ls03b-qn50ls03bafxza/3182106'
     # url = 'https://www.shopmyexchange.com/ninja-professional-plus-blender-with-auto-iq/2392119'
     url = 'https://www.shopmyexchange.com/nike-men-s-revolution-6-running-shoes/2724994'
 
     # print(main(url))
-    print(get_specs(url))
+    # print(get_specs(url))
     # print(get_model_from_overview(url))
-    # print(get_title(url))
+    print(get_title(url))
