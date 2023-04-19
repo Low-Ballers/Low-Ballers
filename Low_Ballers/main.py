@@ -83,8 +83,9 @@ def prompt_for_input():
     else:
         print("Please enter the price of the product you have entered")
         price_input = input("Enter price of the product, ex $49.99 > $")
-        # regex validate url
-        if type(price_input) == float:
+        try:
+            price_input = float(price_input)
+        except:
             search_failed()
         product_price = price_input
         search_successful()
@@ -110,31 +111,51 @@ def search_successful():
     exchange_get = exchange_main(url)
     title = exchange_get['title']
     print("Please wait while we search for you......")
-    print(f" Your product was {title} at the price of {product_price}")
+    print(f" Your product was {title} at the price of ${product_price}")
     print("We were able to find the following matches for the best price :")
     # if price comes back at not available , s
-    bestbuy = 69.99
     sears = get_price_sears(exchange_get)
     if sears:
-        sears_output = f"Sears price:{sears['price']},{sears['url']}"
-    else:
+        sears['price'] = format_price(sears['price'])
+        sears_output = f"Sears price:${sears['price']},{sears['url']}"
+    if sears is None:
         sears_output = "Could not find match for Sears"
+        sears = dict()
+        sears['price'] = float('inf')
     target = get_price_target(exchange_get)
     if target:
-        target_output = f"Target price:{target['price']},{target['url']}"
-    else:
+        target['price'] = format_price(target['price'])
+        target_output = f"Target price:${target['price']},{target['url']}"
+    if target is None:
         target_output = "Could not find match for Target"
-    amazon = 75.00
+        target = dict()
+        target['price'] = float('inf')
+    amazon = None
+    if amazon:
+        amazon_output = f"Amazon price:"
+    if amazon is None:
+        amazon_output = "Could not find match for Amazon"
+        amazon = float('inf')
+    bestbuy = None
+    if bestbuy:
+        bestbuy_output = f"Bestbuy price:"
+    if bestbuy is None:
+        bestbuy_output = "Could not find match for BestBuy"
+        bestbuy = float('inf')
     walmart = get_price_walmart(exchange_get)
-    walmart = {'price': walmart, 'url': 'walmart.com/stopblockingus'}
-    print('walmart', get_price_walmart(exchange_get))
-    input('wait')
-    print(f"Best buy price:{bestbuy}, url")
+    if walmart:
+        walmart['price'] = format_price(walmart['price'])
+        walmart_output = f"Walmart price:${walmart['price']}, {walmart['url']}"
+    if walmart is None:
+        walmart_output = " Could not find match for Walmart"
+        walmart = dict()
+        walmart['price'] = float('inf')
+    print(bestbuy_output)
     print(sears_output)
     print(target_output)
-    print(f"Walmart price: {walmart['price']}, {walmart['url']}")
-    print(f"Amazon price: {amazon}, url")
-    user_price = lowest_price(bestbuy, sears['price'], target, amazon, walmart, product_price)
+    print(walmart_output)
+    print(amazon_output)
+    user_price = lowest_price(bestbuy, sears['price'], target['price'], amazon, walmart['price'], product_price)
     print(f"The best price for your search based on all the retail stores was {user_price}")
     print(f"Press 'X' to get a copy of your search results, 'Q' to quit,  'N' for new search")
     user_input = input(">")
@@ -150,10 +171,8 @@ def search_successful():
 
 
 def lowest_price(a,b,c,d,e,f):
-    params = [a, b, c, d, e, f]
-    for i in range(len(params)):
-        if isinstance(params[i], str):
-            params[i] = 1000000
+
+
     return min(a,b,c,d,e,f)
 
 def more_info():
@@ -194,7 +213,14 @@ def quit():
 |##=========ONE DOLLAR===========##|
 ------------------------------------
     ''')
-
+def format_price(price):
+    if price[0] == '$':
+        price = price[1:]
+    output = ''
+    for char in price:
+        if char != ',':
+            output += char
+    return float(output)
 
 if __name__ == "__main__":
     intro()
