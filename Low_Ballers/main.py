@@ -3,6 +3,7 @@ from Low_Ballers.email_gen import data_email
 from Low_Ballers.exchange import exchange_main
 from Low_Ballers.sears import get_price as get_price_sears
 from Low_Ballers.target import get_price as get_price_target
+from Low_Ballers.walmart import get_price as get_price_walmart
 
 product_price = 0
 user_input = ''
@@ -114,13 +115,24 @@ def search_successful():
     # if price comes back at not available , s
     bestbuy = 69.99
     sears = get_price_sears(exchange_get)
+    if sears:
+        sears_output = f"Sears price:{sears['price']},{sears['url']}"
+    else:
+        sears_output = "Could not find match for Sears"
     target = get_price_target(exchange_get)
+    if target:
+        target_output = f"Target price:{target['price']},{target['url']}"
+    else:
+        target_output = "Could not find match for Target"
     amazon = 75.00
-    walmart = 45.99
+    walmart = get_price_walmart(exchange_get)
+    walmart = {'price': walmart, 'url': 'walmart.com/stopblockingus'}
+    print('walmart', get_price_walmart(exchange_get))
+    input('wait')
     print(f"Best buy price:{bestbuy}, url")
-    print(f"Sears price:{sears['price']},{sears['url']}")
-    print(f"Target price:{target['price']}, {target['url']}")
-    print(f"Walmart price: {walmart}, url")
+    print(sears_output)
+    print(target_output)
+    print(f"Walmart price: {walmart['price']}, {walmart['url']}")
     print(f"Amazon price: {amazon}, url")
     user_price = lowest_price(bestbuy, sears['price'], target, amazon, walmart, product_price)
     print(f"The best price for your search based on all the retail stores was {user_price}")
