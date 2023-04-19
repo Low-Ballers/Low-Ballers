@@ -110,9 +110,10 @@ def search_successful():
     global url
     exchange_get = exchange_main(url)
     title = exchange_get['title']
-    print("Please wait while we search for you......")
-    print(f" Your product was {title} at the price of ${product_price}")
+    exchange_message = f" Your product was {title} at the price of ${product_price}"
+    print(exchange_message)
     print("We were able to find the following matches for the best price :")
+    print("Please wait while we search for you......")
     # if price comes back at not available , s
     sears = get_price_sears(exchange_get)
     if sears:
@@ -156,11 +157,12 @@ def search_successful():
     print(walmart_output)
     print(amazon_output)
     user_price = lowest_price(bestbuy, sears['price'], target['price'], amazon, walmart['price'], product_price)
-    print(f"The best price for your search based on all the retail stores was {user_price}")
+    print(f"The best price for your search based on all the retail stores was ${user_price}")
     print(f"Press 'X' to get a copy of your search results, 'Q' to quit,  'N' for new search")
     user_input = input(">")
     if user_input.lower() == "x":
-        data_email()
+        data_email(amazon_output, bestbuy_output, sears_output, target_output, walmart_output, exchange_message)
+        print(f"Press 'X' to get a copy of your search results, 'Q' to quit,  'N' for new search")
     if user_input.lower() == "n":
         prompt_for_input()
         breakpoint()
@@ -214,12 +216,13 @@ def quit():
 ------------------------------------
     ''')
 def format_price(price):
-    if price[0] == '$':
-        price = price[1:]
     output = ''
     for char in price:
-        if char != ',':
+        if char != ',' and char != '$' and char != ' ':
             output += char
+    if '-' in output:
+        lst = output.split('-')
+        return float(lst[1])
     return float(output)
 
 if __name__ == "__main__":
