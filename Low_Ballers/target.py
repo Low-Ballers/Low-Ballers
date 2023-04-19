@@ -34,13 +34,12 @@ def get_product_page(product_dict):
         if result_dict:
             return result_dict
 
-    else:
-        return None, None
+    return None
 
 def get_html(url_input):
     with sync_playwright() as p:
         # opens browser
-        browser = p.chromium.launch(headless=False, slow_mo=100)
+        browser = p.chromium.launch(headless=True, slow_mo=100)
 
         # opens page
         page = browser.new_page()
@@ -99,5 +98,5 @@ if __name__ == '__main__':
     }
 
     print(get_price(tv))
-    # print(get_price(ninja))
-    # print(get_price(nike))
+    print(get_price(ninja))
+    print(get_price(nike))

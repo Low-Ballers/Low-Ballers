@@ -44,8 +44,7 @@ def get_product_page(product_dict):
             products = soup.find_all('app-product-card')
             if len(products) == 0:
                 return soup, url
-    else:
-        return None, None
+    return None, None
 
 def get_html(url_input):
     with sync_playwright() as p:
@@ -65,9 +64,8 @@ def get_html(url_input):
             # Get html
             html = page.inner_html("app-root")
 
-        except Exception as e:
-            print(e)
-            return None
+        except:
+            return None, None
 
         # Save as bs4
         soup = BeautifulSoup(html, 'html.parser')
