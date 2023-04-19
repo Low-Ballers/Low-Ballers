@@ -22,13 +22,13 @@ def get_price(product_dict):
 
     return product_info
 
-def get_search(product_dict):
-    soup = get_html(f"https://www.walmart.com/search?q={product_dict['model']}")
+def get_search(model):
+    soup = get_html(f"https://www.walmart.com/search?q={model}")
     search_results = soup.find_all(attrs={'class':'mb0 ph1 pa0-xl bb b--near-white w-25'})
     return search_results
 
 def get_product_page(product_dict):
-    search_results = get_search(product_dict)
+    search_results = get_search(product_dict['model'])
     product_urls = []
     for result in search_results:
         link = result.find('a')
