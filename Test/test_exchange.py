@@ -3,7 +3,6 @@ from unittest import mock
 import pytest
 import requests
 from bs4 import BeautifulSoup
-
 from exchange import main, get_html, get_specs, get_model_from_overview, get_title
 
 
