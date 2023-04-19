@@ -3,11 +3,11 @@ from unittest import mock
 import pytest
 import requests
 from bs4 import BeautifulSoup
-from exchange import main, get_html, get_specs, get_model_from_overview, get_title
+from Low_Ballers.exchange import exchange_main, get_html, get_specs, get_model_from_overview, get_title
 
 
-def test_exists_main():
-    assert main
+def test_exists_exchange_main():
+    assert exchange_main('https://www.example.com')
 
 
 def test_exists_get_html():
@@ -22,7 +22,7 @@ def test_get_html():
     with mock.patch('requests.get') as mock_get:
         mock_get.return_value = expected_output
 
-        from exchange import get_html
+        from Low_Ballers.exchange import get_html
         result = get_html(url_input)
 
     assert result == BeautifulSoup(expected_output.text, 'html.parser')
@@ -44,7 +44,6 @@ def test_get_title():
     # url_input = ""
     # expected_title = ""
     # assert get_title(url_input) == expected_title
-
 
 
 
