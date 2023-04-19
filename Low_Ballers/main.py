@@ -6,11 +6,12 @@ from Low_Ballers.target import get_price as get_price_target
 from Low_Ballers.walmart import get_price as get_price_walmart
 
 product_price = 0
-user_input = ''
+# user_input = ''
 url = ''
 
-def intro():
 
+def intro():
+    user_input = ''
     print("\033[32m" + '''
                                         *,*..**,.                               
                                       ...,.......*/                             
@@ -51,27 +52,27 @@ def intro():
     print("\033[1;31:40m" + "Welcome to LowBallers shopping for Vets ,"
                             "where we match prices for Sears, Walmart, "
                             "Amazon, Target, and Best Buy to give you the best price")
-    print("Press 'Y' to start, 'M' for more info, 'A' for about us or 'Q' to Quit")
     print("https://www.aafes.com/exchange-stores/price-match/, Visit AAFES Price Match Policy")
-    user_input = input(">")
-    if user_input.lower() == "y":
-        prompt_for_input()
-    if user_input.lower() == "m":
-        more_info()
-    if user_input.lower() == "a":
-        aboutus()
-    else:
-        user_input.lower() == 'q'
-        quit()
-        breakpoint()
-
-
+    while user_input is not 'q':
+        print("Press 'S' to search, 'M' for more info, 'A' for about us or 'Q' to Quit")
+        user_input = input(">")
+        if user_input.lower() == "s":
+            prompt_for_input()
+        elif user_input.lower() == "m":
+            more_info()
+        elif user_input.lower() == "a":
+            aboutus()
+        elif user_input.lower() == 'q':
+            # user_input.lower() == 'q'
+            quit()
+        else:
+            print('Bad selection, Try Again!')
+        print('************************************************', '\n')
 
 
 def prompt_for_input():
     global product_price
     global url
-    global user_input
     print("Please enter the ShopMyExchange URl for the product you will like to search")
     print("Ex https://www.shopmyexchange.com/apple-11-in-512gb-ipad-pro-with-wi-fi-only/3437062")
     user_input = input("Enter URL Here >")
@@ -89,31 +90,33 @@ def prompt_for_input():
             search_failed()
         product_price = price_input
         search_successful()
-        breakpoint()
+
+
 def search_failed():
     global url
-    print("We were not able to find any matches for your search, please enter a new url or")
-    print("Press Q to quit")
-    user_input = input(">")
-    if user_input.lower() == url:
-        search_successful()
-        breakpoint()
-    else:
-        user_input.lower() == 'q'
-        quit()
-        breakpoint()
+    print("We were not able to find any matches for your search")
+    # print("Press Q to quit")
+    # user_input = input(">")
+    # if user_input.lower() == url:
+    #     search_successful()
+    #     breakpoint()
+    # else:
+    #     user_input.lower() == 'q'
+    #     quit()
+    #     breakpoint()
 
 # Guys coming with their code for stores
+
+
 def search_successful():
     global product_price
-    global user_input
     global url
     exchange_get = exchange_main(url)
     title = exchange_get['title']
     exchange_message = f" Your product was {title} at the price of ${product_price}"
     print(exchange_message)
     print("We were able to find the following matches for the best price :")
-    print("Please wait while we search for you......")
+    print("Please wait while we search for you......", '\n')
     # if price comes back at not available , s
     sears = get_price_sears(exchange_get)
     if sears:
@@ -151,31 +154,22 @@ def search_successful():
         walmart_output = " Could not find match for Walmart"
         walmart = dict()
         walmart['price'] = float('inf')
-    print(bestbuy_output)
-    print(sears_output)
-    print(target_output)
-    print(walmart_output)
-    print(amazon_output)
+    print(bestbuy_output, '\n')
+    print(sears_output, '\n')
+    print(target_output, '\n')
+    print(walmart_output, '\n')
+    print(amazon_output, '\n')
     user_price = lowest_price(bestbuy, sears['price'], target['price'], amazon, walmart['price'], product_price)
-    print(f"The best price for your search based on all the retail stores was ${user_price}")
-    print(f"Press 'X' to get a copy of your search results, 'Q' to quit,  'N' for new search")
+    print(f"The best price for your search based on all the retail stores was ${user_price}", '\n')
+    print(f"Do you want your search results? (Y)es or (N)o?")
     user_input = input(">")
-    if user_input.lower() == "x":
+    if user_input.lower() == "y":
         data_email(amazon_output, bestbuy_output, sears_output, target_output, walmart_output, exchange_message)
-        print(f"Press 'X' to get a copy of your search results, 'Q' to quit,  'N' for new search")
-    if user_input.lower() == "n":
-        prompt_for_input()
-        breakpoint()
-    else:
-        user_input.lower() == 'q'
-        quit()
-
 
 
 def lowest_price(a,b,c,d,e,f):
-
-
     return min(a,b,c,d,e,f)
+
 
 def more_info():
     print('''Here at Low Ballers we have created a application that allows you to price
@@ -187,20 +181,33 @@ def more_info():
           ShopMyExchange website honor it. You can find details about the policy at href='https://www.aafes.com/exchange-stores/price-match/'.
           y
           Thanks for letting us serve you''')
-    print("Press 'Y' to return to main menu or 'Q' to Quit")
-    user_input = input('>')
-    if user_input.lower() == "y":
-        intro()
-    if user_input.lower() == "q":
-        quit()
-        breakpoint()
-
-
 
 
 def aboutus():
-    print("aboutus")
+    print('''Sheldon Pierce
+Github: https://github.com/Sheldon-Pierce
+
+    ''')
+    print('''Diontre Sanders
+Github: https://github.com/houseofpython
+    
+    ''')
+    print('''Mike Shen
+Github: https://github.com/mikeshen7     
+    
+    ''')
+    print('''Dominick Martin
+Github: https://github.com/dommcat
+    
+    ''')
+    print('''Ethan Albers
+Github: https://github.com/ekalbers
+    
+    
+    ''')
+
     pass
+
 
 def quit():
     print("Thank you for letting us help you get the lowest price... Low Ballers for life")
@@ -215,6 +222,9 @@ def quit():
 |##=========ONE DOLLAR===========##|
 ------------------------------------
     ''')
+    exit()
+
+
 def format_price(price):
     output = ''
     for char in price:
@@ -224,6 +234,7 @@ def format_price(price):
         lst = output.split('-')
         return float(lst[1])
     return float(output)
+
 
 if __name__ == "__main__":
     intro()

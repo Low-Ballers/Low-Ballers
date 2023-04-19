@@ -36,7 +36,7 @@ def data_email(amazon, bestbuy, sears, target, walmart, exchange):
     frm = ttk.Frame(root, padding=10)
     frm.grid()
     root.title("Low Ballers")
-    root.geometry("700x500+300+300")
+    root.geometry("1200x600+300+300")
     ttk.Label(frm, text=message).grid(column=0, row=0)
     ttk.Button(frm, text="Quit", command=root.destroy).grid(column=1, row=0)
     root.mainloop()
