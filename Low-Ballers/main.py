@@ -1,15 +1,14 @@
 
-
 from email_gen import data_email
+#from exchange import get_title
 
-
+product_price = 0
+user_input = ''
 
 url = "https://www.shopmyexchange.com/apple-11-in-512gb-ipad-pro-with-wi-fi-only/3437062"
 
 def intro():
-    print("\033[1;31:40m" + "Welcome to LowBallers shopping for Vets ,"
-          "where we match prices for Sears, Walmart, "
-          "Amazon, Target, and Best Buy to give you the best price")
+
     print("\033[32m" + '''
                                         *,*..**,.                               
                                       ...,.......*/                             
@@ -17,7 +16,7 @@ def intro():
                      * ,*.*,.(/.. ..,*/(((((((/.....*                           
                    ,  .      ,  ..,*/(########((/**/(                           
                        ,  / ##/#..*/#######%%%%##(((( (  #  (  /                
-             ,  .  .        #%/#.*#%%%%%%%%%%%%%%####. (. (, /* /, *            
+             ,  .  .        #%/#.*#%%% %%%%%%%% y%####. (. (, /* /, *            
             .          ,  / ,%##*#%%%####,%%%%%%%%#                             
                             (%####%%%%%%###%%(%####*  ,          .  , ..        
            /  /  /  / &&&&&&&&%###%%%%%%%%%%%%###  ,  .                         
@@ -47,8 +46,11 @@ def intro():
                                                                                                                                                                                    
 '''
 )
+    print("\033[1;31:40m" + "Welcome to LowBallers shopping for Vets ,"
+                            "where we match prices for Sears, Walmart, "
+                            "Amazon, Target, and Best Buy to give you the best price")
     print("Press 'Y' to start, 'M' for more info, 'A' for about us or 'Q' to Quit")
-    print("<a href='https://www.aafes.com/exchange-stores/price-match/'>Visit AAFES Price Match Policy</a>")
+    print("https://www.aafes.com/exchange-stores/price-match/, Visit AAFES Price Match Policy")
     user_input = input(">")
     if user_input.lower() == "y":
         prompt_for_input()
@@ -65,7 +67,8 @@ def intro():
 
 
 def prompt_for_input():
-    print("Please enter Shopmyexchange URl for the product you will like to search")
+    global product_price
+    print("Please enter the ShopMyExchange URl for the product you will like to search")
     print("Ex https://www.shopmyexchange.com/apple-11-in-512gb-ipad-pro-with-wi-fi-only/3437062")
     user_input = input("Enter URL Here >")
     if user_input.lower() != url:
@@ -73,6 +76,9 @@ def prompt_for_input():
 
     else:
         user_input.lower() == url
+        print("Please enter the price of the product you have entered")
+        price_input = input("Enter price of the product, ex $49.99 > $")
+        product_price = float(price_input)
         search_successful()
         breakpoint()
 def search_failed():
@@ -90,20 +96,24 @@ def search_failed():
 
 # Guys coming with their code for stores
 def search_successful():
+    global product_price
+    global user_input
+    #title = get_title(user_input)
     print("Please wait while we search for you......")
+    print(f" Your product was Ninja Blender 298z at the price of {product_price}")
     print("We were able to find the following matches for the best price :")
     # if price comes back at not available , s
     bestbuy = 69.99
     sears = 59.99
     target = 58.99
-    amazon = 'not available'
+    amazon = 75.00
     walmart = 45.99
     print(f"Best buy price:{bestbuy}, url")
     print(f"Sears price:{sears}, url")
     print(f"Target price:{target}, url")
     print(f"Walmart price: {walmart}, url")
     print(f"Amazon price: {amazon}, url")
-    user_price = lowest_price(bestbuy, sears, target)
+    user_price = lowest_price(bestbuy, sears, target, amazon, walmart, product_price)
     print(f"The best price for your search based on all the retail stores was {user_price}")
     print(f"Press 'X' to get a copy of your search results, 'Q' to quit,  'N' for new search")
     user_input = input(">")
@@ -118,14 +128,12 @@ def search_successful():
 
 
 
-def lowest_price(a,b,c,):
-
-    if a <= b and a <= c:
-        return a
-    elif b <= a and b <= c:
-        return b
-    else:
-        return c
+def lowest_price(a,b,c,d,e,f):
+    params = [a, b, c, d, e, f]
+    for i in range(len(params)):
+        if isinstance(params[i], str):
+            params[i] = 1000000
+    return min(a,b,c,d,e,f)
 
 def more_info():
     print('''Here at Low Ballers we have created a application that allows you to price
@@ -153,7 +161,7 @@ def aboutus():
     pass
 
 def quit():
-    print("Thank you for letting us help you get the lowest price... low ballers for life")
+    print("Thank you for letting us help you get the lowest price... Low Ballers for life")
     print('''
     ___________________________________
 |#######====================#######|
@@ -169,10 +177,7 @@ def quit():
 
 if __name__ == "__main__":
     intro()
-    prompt_for_input()
-    search_successful()
-    search_failed()
-    quit()
+
 
 
 
