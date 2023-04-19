@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 def get_price(product_dict):
     # Get html
-    soup = get_search(product_dict)
+    soup = get_product_page(product_dict)
 
     # Check to see if this is the final product page.  If not, return None
     if soup is None:
@@ -20,14 +20,19 @@ def get_price(product_dict):
     return price
 
 def get_search(product_dict):
-    search_dict = dict()
     soup = get_html(f"https://www.walmart.com/search?q={product_dict['model']}")
-    search_results = soup.find_all(attrs={'class':['mb0', 'ph1', 'pa0-xl', 'bb', 'b--near-white', 'w-25']})
+    search_results = soup.find_all(attrs={'class':'mb0 ph1 pa0-xl bb b--near-white w-25'})
     return search_results
 
-def get_product_page(product_table):
+def get_product_page(product_dict):
     search_results = get_search(product_dict)
-    return search_results
+    product_urls = []
+    for result in search_results:
+        link = result.find('a')
+        link = link['href']
+        product_urls.append(f'https://www.walmart.com{link}')
+    soup = get_html(product_urls[0])
+    return soup
 
 def get_html(url_input):
     proxy_params = {
