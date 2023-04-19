@@ -1,6 +1,6 @@
 import pytest
 from bs4 import BeautifulSoup
-from target import get_product_page, check_single_product
+from Low_Ballers.target import get_product_page, check_single_product
 
 def test_get_product_page():
     product_dict = {'upc': '1234567890'}

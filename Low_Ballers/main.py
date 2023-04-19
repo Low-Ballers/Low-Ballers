@@ -4,6 +4,8 @@ from Low_Ballers.exchange import exchange_main
 from Low_Ballers.sears import get_price as get_price_sears
 from Low_Ballers.target import get_price as get_price_target
 from Low_Ballers.walmart import get_price as get_price_walmart
+from prettytable.colortable import ColorTable, Themes
+from colored import fg, bg, attr
 
 product_price = 0
 # user_input = ''
@@ -172,39 +174,30 @@ def lowest_price(a,b,c,d,e,f):
 
 
 def more_info():
-    print('''Here at Low Ballers we have created a application that allows you to price
-          check against competitors for the lowest price compared to the ShopMyExchange.com
-          website for veterans. We appreciate everything veterans have done and this is a small token of our appreciation.
-          By simply placing the url of the product page you land on within the ShopMyExchange
-          website. We take the information and search for the lowest price and return you the best deal.
-          After returning you the price we also allow you to save the information to your email to have the 
-          ShopMyExchange website honor it. You can find details about the policy at href='https://www.aafes.com/exchange-stores/price-match/'.
-          y
-          Thanks for letting us serve you''')
+    print('''
+    
+Here at Low Ballers we have created a application that allows you to price
+check against competitors for the lowest price compared to the ShopMyExchange.com
+website for veterans. We appreciate everything veterans have done and this is a small token of our appreciation.
+By simply placing the url of the product page you land on within the ShopMyExchange
+website. We take the information and search for the lowest price and return you the best deal.
+After returning you the price we also allow you to save the information to your email to have the 
+ShopMyExchange website honor it. You can find details about the policy at https://www.aafes.com/exchange-stores/price-match/
+
+Thanks for letting us serve you
+''')
 
 
 def aboutus():
-    print('''Sheldon Pierce
-Github: https://github.com/Sheldon-Pierce
+    x = ColorTable(theme=Themes.OCEAN)
 
-    ''')
-    print('''Diontre Sanders
-Github: https://github.com/houseofpython
-    
-    ''')
-    print('''Mike Shen
-Github: https://github.com/mikeshen7     
-    
-    ''')
-    print('''Dominick Martin
-Github: https://github.com/dommcat
-    
-    ''')
-    print('''Ethan Albers
-Github: https://github.com/ekalbers
-    
-    
-    ''')
+    x.field_names = ["Low Ballers", "Github", "LinkedIn", "Portfolio"]
+    x.add_row(["Sheldon Pierce", 'https://github.com/Sheldon-Pierce', 'https://www.linkedin.com/in/sheldon-pierce/', 'https://sheldonpierce.netlify.app/'])
+    x.add_row(["Diontre Sanders", 'https://github.com/houseofpython', 'https://www.linkedin.com/in/diontresanders/', ''])
+    x.add_row(["Mike Shen", 'https://github.com/mikeshen7', 'https://www.linkedin.com/in/mike-shen1/', ''])
+    x.add_row(["Dominick Martin", 'https://github.com/dommcat', 'https://www.linkedin.com/in/dominickmartin/', ''])
+    x.add_row(["Ethan Albers", 'https://github.com/ekalbers', 'https://www.linkedin.com/in/ethanalbers/', ''])
+    print(x)
 
     pass
 
@@ -212,7 +205,7 @@ Github: https://github.com/ekalbers
 def quit():
     print("Thank you for letting us help you get the lowest price... Low Ballers for life")
     print('''
-    ___________________________________
+____________________________________
 |#######====================#######|
 |#(1)*UNITED STATES OF AMERICA*(1)#|
 |#**          /===\   ********  **#|

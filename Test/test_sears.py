@@ -1,5 +1,5 @@
 import pytest
-from sears import get_price, get_product_page, get_html
+from Low_Ballers.sears import get_price, get_product_page, get_html
 
 
 def test_get_price():
