@@ -8,7 +8,7 @@ def data_email():
 
     # show a message box with some text
     messagebox.showinfo("ShopMyExchange Data", '''
-    Thank you for using Low-Ballers application, 
+    Thank you for using Low_Ballers application, 
     the results you requested are as followed:
 
     Best buy: 29.99 , walmart.com/shop?=34232424234
