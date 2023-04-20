@@ -55,7 +55,7 @@ def intro():
                             "where we match prices for Sears, Walmart, "
                             "Amazon, Target, and Best Buy to give you the best price")
     print("https://www.aafes.com/exchange-stores/price-match/, Visit AAFES Price Match Policy")
-    while user_input is not 'q':
+    while user_input != 'q':
         print("Press 'S' to search, 'M' for more info, 'A' for about us or 'Q' to Quit")
         user_input = input(">")
         if user_input.lower() == "s":
