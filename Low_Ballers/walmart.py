@@ -2,29 +2,26 @@ import requests
 from bs4 import BeautifulSoup
 
 def get_price(product_dict):
-    product_info = dict()
-    # Get html
-    soup, url = get_product_page(product_dict)
-    product_info['url'] = url
+    product = get_product_page(product_dict)
 
-    # Check to see if this is the final product page.  If not, return None
-    if soup is None:
-        return None
-
-    # Find list of products from search results
-    products = soup.find_all(attrs={"itemprop":"price"})
-
-    price = None
-
-    for item in products:
-        price = item.text
-    product_info['price'] = price
-
-    return product_info
+    if product:
+        return product
+    else:
+        return
 
 def get_search(model):
     soup = get_html(f"https://www.walmart.com/search?q={model}")
-    search_results = soup.find_all(attrs={'class':'mb0 ph1 pa0-xl bb b--near-white w-25'})
+    search = soup.find_all(attrs={'class': 'mb0 ph1 pa0-xl bb b--near-white w-25'})
+    search_results = []
+    for result in search:
+        product = dict()
+        link = result.find('a')
+        link = link['href']
+        product['url'] = f'https://www.walmart.com{link}'
+        price = result.find(attrs={'data-automation-id': 'product-price'})
+        price = price.div.string
+        product['price'] = price
+        search_results.append(product)
     return search_results
 
 def get_product_page(product_dict):
@@ -33,13 +30,10 @@ def get_product_page(product_dict):
     else:
         model = product_dict['title']
     search_results = get_search(model)
-    product_urls = []
-    for result in search_results:
-        link = result.find('a')
-        link = link['href']
-        product_urls.append(f'https://www.walmart.com{link}')
-    soup = get_html(product_urls[0])
-    return soup, product_urls[0]
+    if search_results:
+        return search_results[0]
+    else:
+        return
 
 def get_html(url_input):
     proxy_params = {
@@ -47,7 +41,10 @@ def get_html(url_input):
         'url': url_input
     }
 
-    html = requests.get(url='https://proxy.scrapeops.io/v1/', params=proxy_params)
+    html = requests.get(url='https://proxy.scrapeops.io/v1/', params=proxy_params, timeout=120)
+    print(html.status_code)
+    print(html.url)
+
     soup = BeautifulSoup(html.text, 'html.parser')
     return soup
 
@@ -70,7 +67,9 @@ if __name__ == '__main__':
         "brand": "Nike"
     }
 
+    lg = {'model': '27GP850-B'}
+
     apple = {'model': 'MNXH3LL/A', 'title': 'Apple 11 In. 512gb Ipad Pro With Wi-fi Only '}
     # print(get_price(ninja))
-    print(get_price(apple))
+    print(get_price(lg))
 
