@@ -1,5 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+api_key = os.getenv('API_KEY')
 
 def get_price(product_dict):
     product = get_product_page(product_dict)
@@ -37,7 +43,7 @@ def get_product_page(product_dict):
 
 def get_html(url_input):
     proxy_params = {
-        'api_key': 'e9da997b-22c7-4b84-be1b-81e9dfce44d1',
+        'api_key': api_key,
         'url': url_input
     }
 

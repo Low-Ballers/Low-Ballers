@@ -232,4 +232,8 @@ $RECYCLE.BIN/
 
 .venv
 
+# pyteset folders and files
+.pytest_cache
+__pycache__
+
 # End of https://www.gitignore.io/api/node,macos,linux,windows,webstorm,visualstudiocode
