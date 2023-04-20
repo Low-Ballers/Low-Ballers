@@ -7,7 +7,7 @@ from Low_Ballers.exchange import exchange_main, get_html, get_specs, get_model_f
 
 
 def test_exists_exchange_main():
-    assert exchange_main('https://www.example.com')
+    assert exchange_main('https://www.shopmyexchange.com/nike-men-s-revolution-6-running-shoes/2724994')
 
 
 def test_exists_get_html():

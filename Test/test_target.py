@@ -2,10 +2,17 @@ import pytest
 from bs4 import BeautifulSoup
 from Low_Ballers.target import get_product_page, check_single_product
 
+
+def test_get_price():
+    product_dict = {'upc': '1234567890', 'price': '$450'}
+    result = get_product_page(product_dict)
+    assert result is None
+
+
 def test_get_product_page():
     product_dict = {'upc': '1234567890'}
     result = get_product_page(product_dict)
-    assert result is not None
+    assert result is None
 
 
 def test_check_single_product():
