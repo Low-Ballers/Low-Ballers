@@ -13,6 +13,16 @@ def test_get_product_page():
     assert actual == expected
 
 
+def test_get_product_page_title():
+    product_dict = {'title': 'Samsung 50 In. Qled Frame 4k Smart Tv Class Ls03b Qn50ls03bafxza'}
+    actual = get_product_page(product_dict)
+    expected = {
+        'url': 'https://www.walmart.com/ip/SAMSUNG-50-Class-LS03B-The-Frame-QLED-4K-Smart-TV-QN50LS03BAFXZA-2022/821644919?from=searchResults',
+        'price': '$1,149.00'
+    }
+    assert actual == expected
+
+
 def test_get_price():
     product_dict = {'model': '27GP850-B'}
     actual = get_price(product_dict)
