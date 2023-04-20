@@ -9,10 +9,11 @@ from Low_Ballers.exchange import exchange_main, get_html, get_specs, get_model_f
 def test_exists_exchange_main():
     assert exchange_main('https://www.shopmyexchange.com/nike-men-s-revolution-6-running-shoes/2724994')
 
+def test_exchange_main_tv():
+    assert exchange_main('https://www.shopmyexchange.com/samsung-50-in-qled-frame-4k-smart-tv-class-ls03b-qn50ls03bafxza/3182106')
 
 def test_exists_get_html():
     assert get_html
-
 
 def test_get_html():
     url_input = 'https://www.example.com'
@@ -35,21 +36,16 @@ def test_get_title():
     expected_title = "Nike Men's Revolution 6 Running Shoes "
     assert get_title(url_input) == expected_title
 
-    # # Test case 2: Invalid URL input
-    # url_input = "https://www.shopmyexchange.com/non-existent-product/0000000"
-    # expected_title = ""
-    # assert get_title(url_input) == expected_title
-    #
-    # # Test case 3: Empty URL input
-    # url_input = ""
-    # expected_title = ""
-    # assert get_title(url_input) == expected_title
-
-
+def test_main_bad_url():
+    # Test case 1: Valid URL input
+    url_input = "https://www.shopmyexchange.com/non-existent-product/0000000"
+    actual = exchange_main(url_input)
+    expected = {}
+    assert actual == expected
 
 
 @pytest.fixture
-def mock_html(monkeypatch):
+def mock_html(monkeypatch): # pragma: no cover
     # Mocking HTML response
     html = """
         <html>

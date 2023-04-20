@@ -23,6 +23,7 @@ Install per requirements.txt
 - pip install pytest-playwright
 - playwright install
 - pip install coverage
+- pip install python-dotenv
 
 
 ## How to initialize/run your application (where applicable)
