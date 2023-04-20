@@ -36,7 +36,7 @@ def get_product_page(product_dict):
 
     return None
 
-def get_html(url_input):
+def get_html(url_input): # pragma: no cover
     with sync_playwright() as p:
         # opens browser
         browser = p.chromium.launch(headless=True, slow_mo=100)
@@ -79,7 +79,7 @@ def check_single_product(soup):
     else:
         return None
 
-if __name__ == '__main__':
+if __name__ == '__main__': # pragma: no cover
     tv = {
         "upc": "887276625447",
         "model": "QN50LS03BAFXZA",

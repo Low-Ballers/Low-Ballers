@@ -2,19 +2,15 @@
 
 ## Team Members: 
 
-Dominick Martin
-
-Ethan Albers
-
-Mike Shen
-
-Sheldon Pierce
-
-Tre Sanders
+- Dominick Martin
+- Ethan Albers
+- Mike Shen
+- Sheldon Pierce
+- Tre Sanders
 
 ## Description:
 
-Application that searches and compares prices of x number of similar store websites and returns the price.
+Application that assists military members with pricing matching items found on the military exchange shop with other store websites and returns the price.
 
 ## Links and Resources
 N/A
@@ -22,38 +18,31 @@ N/A
 ## Setup
 
 Install per requirements.txt
+- pip install pytest
+- pip install beautifulsoup4
+- pip install pytest-playwright
+- playwright install
+- pip install coverage
+
 
 ## How to initialize/run your application (where applicable)
 
+from root folder, run:
 
+python -m Low_Ballers.main
 
 ## How to use your library (where applicable)
 N/A
 
 ## Tests
-[]()
 
+from root folder, run:
 
+coverage run -m pytest
 
-## Setup
+coverage report -m
 
 ## Link to Code
 
-[]()
+[Link to Code](https://github.com/Low-Ballers/Low-Ballers/tree/staging/Low_Ballers)
 
-
-# These are the potential 
-
-pip3: pip3 install 23.1
-
-# CLI 
-pip install pytest
-pip install beautifulsoup4
-pip install pytest-playwright
-playwright install
-pip freeze > requirements.txt
-
-
-
-# https://typer.tiangolo.com/
-# includes rich 
