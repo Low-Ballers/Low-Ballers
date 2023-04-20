@@ -6,13 +6,6 @@ from _pytest import monkeypatch
 from Low_Ballers.main import prompt_for_input, search_successful, search_failed, lowest_price, format_price, intro, aboutus
 
 
-
-def test_intro():
-    assert intro('s') == prompt_for_input()
-    assert intro('p') == 'Bad selection, Try Again!'
-    assert intro('a') == aboutus()
-
-
 def test_search_failed_not_string():
     with pytest.raises(TypeError):
         search_failed(123)

@@ -27,7 +27,7 @@ Install per requirements.txt
 - sudo apt-get install python3.11-tk # modify for your version of python
 - pip install colored
 - pip install prettytable
-
+- pip install tqdm
 
 
 ## How to initialize/run your application (where applicable)
