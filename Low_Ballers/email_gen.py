@@ -43,7 +43,7 @@ def data_email(amazon, bestbuy, sears, target, walmart, exchange):
 
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     data_email('Amazon: 39.99 , amazon.com/shop?=34r3243242',
                'Best buy: 29.99 , walmart.com/shop?=34232424234',
                'Sears: 42.99, sears.com/shop?= 34234224',
