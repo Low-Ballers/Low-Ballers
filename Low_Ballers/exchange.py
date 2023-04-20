@@ -10,10 +10,16 @@ def exchange_main(url_input):
     if 'Model' in spec_dict:
         output_dict['model'] = spec_dict['Model']
     else:
-        output_dict['model'] = get_model_from_overview(url_input)
+        model = get_model_from_overview(url_input)
+        if model:
+            output_dict['model'] = model
 
     if 'UPC' in spec_dict:
         output_dict['upc'] = spec_dict['UPC']
+
+    # Bad url - no data up to this point.  Return empty dict
+    if len(output_dict) == 0:
+        return output_dict
 
     output_dict['title'] = get_title(url_input)
 
@@ -51,12 +57,15 @@ def get_specs(url_input):
         if div.find_all(attrs={"class":"sku-specs-table"}):
             div_list.append(div)
 
-    # Find all rows
-    # Look at last div only (this should be the innermost div)
-    row_bs4_list = div_list[-1].find_all('tr')
-
     # Create dict of specs
     spec_dict = dict()
+
+    # Find all rows
+    # Look at last div only (this should be the innermost div)
+    if len(div_list) == 0:
+        return spec_dict
+
+    row_bs4_list = div_list[-1].find_all('tr')
 
     for row in row_bs4_list:
         key = row.find("th").getText()
@@ -86,6 +95,8 @@ def get_model_from_overview(url_input):
     for elem in soup(string=re.compile(r".*Style:.*")):
         elements.append(elem)
 
+    if len(elements) == 0:
+        return None
 
     string_output = elements[0]
     list_output = string_output.split()
@@ -114,11 +125,12 @@ def get_title(url_input):
     return title
 
 
-if __name__ == "__main__":
-    # url = 'https://www.shopmyexchange.com/samsung-50-in-qled-frame-4k-smart-tv-class-ls03b-qn50ls03bafxza/3182106'
+if __name__ == "__main__": # pragma: no cover
+    url = 'https://www.shopmyexchange.com/samsung-50-in-qled-frame-4k-smart-tv-class-ls03b-qn50ls03bafxza/3182106'
     # url = 'https://www.shopmyexchange.com/ninja-professional-plus-blender-with-auto-iq/2392119'
     # url = 'https://www.shopmyexchange.com/nike-men-s-revolution-6-running-shoes/2724994'
-    url = 'https://www.shopmyexchange.com/apple-11-in-512gb-ipad-pro-with-wi-fi-only/3437062'
+    # url = 'https://www.shopmyexchange.com/apple-11-in-512gb-ipad-pro-with-wi-fi-only/3437062'
+    url = 'https://www.shopmyexchange.com/non-existent-product/0000000'
     # print(main(url))
     # print(get_specs(url))
     # print(get_model_from_overview(url))

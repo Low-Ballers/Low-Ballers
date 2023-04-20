@@ -46,7 +46,7 @@ def get_product_page(product_dict):
                 return soup, url
     return None, None
 
-def get_html(url_input):
+def get_html(url_input): # pragma: no cover
     with sync_playwright() as p:
         # opens browser
         browser = p.chromium.launch(headless=False, slow_mo=3000)
@@ -75,33 +75,7 @@ def get_html(url_input):
 
     return soup, page.url
 
-def get_product_info(query):
-    # ********* NOT USED - saved for future reference *********
-    # Get html
-    soup = get_html(f"https://sears.com/search={query}")
-
-    # Find list of products from search results
-    # Using Title, gets us 13 results
-    # This is a list
-    products = soup.find_all('app-product-card')
-
-    list_output = []
-
-    # Find 'a' tags for each product
-    for tag in products:
-        list_output.append(tag.find('a'))
-
-    filtered_output = []
-
-    # Filter by text that has model number
-    for item in list_output:
-        model_match = False
-        for tag in item:
-            if "QN50LS03BAFXZA" in tag.text:
-                filtered_output.append(tag)
-    return
-
-if __name__ == '__main__':
+if __name__ == '__main__': # pragma: no cover
     tv = {
         "upc": "887276625447",
         "model": "QN50LS03BAFXZA",
