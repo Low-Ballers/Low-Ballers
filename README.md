@@ -24,6 +24,10 @@ Install per requirements.txt
 - playwright install
 - pip install coverage
 - pip install python-dotenv
+- sudo apt-get install python3.11-tk # modify for your version of python
+- pip install colored
+- pip install prettytable
+
 
 
 ## How to initialize/run your application (where applicable)
