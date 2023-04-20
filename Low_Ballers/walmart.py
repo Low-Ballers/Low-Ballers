@@ -54,8 +54,6 @@ def get_html(url_input):  # pragma: no cover
     }
 
     html = requests.get(url='https://proxy.scrapeops.io/v1/', params=proxy_params, timeout=120)
-    print(html.status_code)
-    print(html.url)
 
     soup = BeautifulSoup(html.text, 'html.parser')
     return soup
