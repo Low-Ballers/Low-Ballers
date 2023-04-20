@@ -7,6 +7,7 @@ load_dotenv()
 
 api_key = os.getenv('API_KEY')
 
+
 def get_price(product_dict):
     product = get_product_page(product_dict)
 
@@ -14,6 +15,7 @@ def get_price(product_dict):
         return product
     else:
         return
+
 
 def get_search(model):
     soup = get_html(f"https://www.walmart.com/search?q={model}")
@@ -30,18 +32,22 @@ def get_search(model):
         search_results.append(product)
     return search_results
 
+
 def get_product_page(product_dict):
     if 'model' in product_dict.keys():
         model = product_dict['model']
-    else:
+    elif 'title' in product_dict.keys():
         model = product_dict['title']
+    else:
+        return None
     search_results = get_search(model)
     if search_results:
         return search_results[0]
     else:
         return
 
-def get_html(url_input):
+
+def get_html(url_input):  # pragma: no cover
     proxy_params = {
         'api_key': api_key,
         'url': url_input
@@ -55,7 +61,7 @@ def get_html(url_input):
     return soup
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     tv = {
         "upc": "887276625447",
         "model": "QN50LS03BAFXZA",
