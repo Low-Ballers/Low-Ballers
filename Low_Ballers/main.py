@@ -6,6 +6,9 @@ from Low_Ballers.target import get_price as get_price_target
 from Low_Ballers.walmart import get_price as get_price_walmart
 from prettytable.colortable import ColorTable, Themes
 from colored import fg, bg, attr
+from tqdm import tqdm
+import time
+import os
 
 product_price = 0
 # user_input = ''
@@ -57,27 +60,33 @@ def intro():
     print("https://www.aafes.com/exchange-stores/price-match/, Visit AAFES Price Match Policy")
     while user_input != 'q':
         print("Press 'S' to search, 'M' for more info, 'A' for about us or 'Q' to Quit")
+
+
         user_input = input(">")
         if user_input.lower() == "s":
+            os.system('cls' if os.name == 'nt' else 'clear')
             prompt_for_input()
         elif user_input.lower() == "m":
+            os.system('cls' if os.name == 'nt' else 'clear')
             more_info()
         elif user_input.lower() == "a":
+            os.system('cls' if os.name == 'nt' else 'clear')
             aboutus()
         elif user_input.lower() == 'q':
-            # user_input.lower() == 'q'
+            os.system('cls' if os.name == 'nt' else 'clear')
             quit()
         else:
             print('Bad selection, Try Again!')
-        print('************************************************', '\n')
+
 
 
 def prompt_for_input():
     global product_price
     global url
     print("Please enter the ShopMyExchange URl for the product you will like to search")
-    print("Ex https://www.shopmyexchange.com/apple-11-in-512gb-ipad-pro-with-wi-fi-only/3437062")
+    print("Example URL: https://www.shopmyexchange.com/apple-11-in-512gb-ipad-pro-with-wi-fi-only/3437062")
     user_input = input("Enter URL Here >")
+    os.system('cls' if os.name == 'nt' else 'clear')
     url = user_input
     #regex validate url
     if user_input.lower() != '' and False:
@@ -86,6 +95,7 @@ def prompt_for_input():
     else:
         print("Please enter the price of the product you have entered")
         price_input = input("Enter price of the product, ex $49.99 > $")
+        os.system('cls' if os.name == 'nt' else 'clear')
         try:
             price_input = float(price_input)
         except:
@@ -97,17 +107,85 @@ def prompt_for_input():
 def search_failed():
     global url
     print("We were not able to find any matches for your search")
-    # print("Press Q to quit")
-    # user_input = input(">")
-    # if user_input.lower() == url:
-    #     search_successful()
-    #     breakpoint()
-    # else:
-    #     user_input.lower() == 'q'
-    #     quit()
-    #     breakpoint()
 
-# Guys coming with their code for stores
+
+# def search_successful():
+#     global product_price
+#     global url
+#
+#     exchange_get = exchange_main(url)
+#
+#     sites = {
+#         'sears': get_price_sears(exchange_get),
+#         'target': get_price_target(exchange_get),
+#         'amazon': None,
+#         'bestbuy': None,
+#         'walmart': get_price_walmart(exchange_get)
+#     }
+#
+#     title = exchange_get['title']
+#     exchange_message = f" Your product was {title} at the price of ${product_price}"
+#     print(exchange_message)
+#     print("We were able to find the following matches for the best price :")
+#     print("Please wait while we search for you......", '\n')
+#     # if price comes back at not available , s
+#
+#     for item in tqdm(sites):
+#         if item:
+#             item['price'] = format_price(item['price'])
+#             sears_output = f"Sears price:${item['price']},{item['url']}"
+#
+#
+#
+#
+#     if sears:
+#         sears['price'] = format_price(sears['price'])
+#         sears_output = f"Sears price:${sears['price']},{sears['url']}"
+#
+#
+#     if sears is None:
+#         sears_output = "Could not find match for Sears"
+#         sears = dict()
+#         sears['price'] = float('inf')
+#
+#     if target:
+#         target['price'] = format_price(target['price'])
+#         target_output = f"Target price:${target['price']},{target['url']}"
+#     if target is None:
+#         target_output = "Could not find match for Target"
+#         target = dict()
+#         target['price'] = float('inf')
+#
+#     if amazon:
+#         amazon_output = f"Amazon price:"
+#     if amazon is None:
+#         amazon_output = "Did not try Amazon because APIs cost money"
+#         amazon = float('inf')
+#
+#     if bestbuy:
+#         bestbuy_output = f"Bestbuy price:"
+#     if bestbuy is None:
+#         bestbuy_output = "We are Low Ballers (i.e. broke ballers).  Did not try Bestbuy"
+#         bestbuy = float('inf')
+#
+#     if walmart:
+#         walmart['price'] = format_price(walmart['price'])
+#         walmart_output = f"Walmart price:${walmart['price']}, {walmart['url']}"
+#     if walmart is None:
+#         walmart_output = " Could not find match for Walmart"
+#         walmart = dict()
+#         walmart['price'] = float('inf')
+#     print(bestbuy_output, '\n')
+#     print(sears_output, '\n')
+#     print(target_output, '\n')
+#     print(walmart_output, '\n')
+#     print(amazon_output, '\n')
+#     user_price = lowest_price(bestbuy, sears['price'], target['price'], amazon, walmart['price'], product_price)
+#     print(f"The best price for your search based on all the retail stores was ${user_price}", '\n')
+#     print(f"Do you want your search results? (Y)es or (N)o?")
+#     user_input = input(">")
+#     if user_input.lower() == "y":
+#         data_email(amazon_output, bestbuy_output, sears_output, target_output, walmart_output, exchange_message)
 
 
 def search_successful():
@@ -119,55 +197,70 @@ def search_successful():
     print(exchange_message)
     print("We were able to find the following matches for the best price :")
     print("Please wait while we search for you......", '\n')
-    # if price comes back at not available , s
-    sears = get_price_sears(exchange_get)
-    if sears:
-        sears['price'] = format_price(sears['price'])
-        sears_output = f"Sears price:${sears['price']},{sears['url']}"
-    if sears is None:
-        sears_output = "Could not find match for Sears"
-        sears = dict()
-        sears['price'] = float('inf')
-    target = get_price_target(exchange_get)
-    if target:
-        target['price'] = format_price(target['price'])
-        target_output = f"Target price:${target['price']},{target['url']}"
-    if target is None:
-        target_output = "Could not find match for Target"
-        target = dict()
-        target['price'] = float('inf')
-    amazon = None
-    if amazon:
-        amazon_output = f"Amazon price:"
-    if amazon is None:
-        amazon_output = "Could not find match for Amazon"
-        amazon = float('inf')
-    bestbuy = None
-    if bestbuy:
-        bestbuy_output = f"Bestbuy price:"
-    if bestbuy is None:
-        bestbuy_output = "Could not find match for BestBuy"
-        bestbuy = float('inf')
-    walmart = get_price_walmart(exchange_get)
-    if walmart:
-        walmart['price'] = format_price(walmart['price'])
-        walmart_output = f"Walmart price:${walmart['price']}, {walmart['url']}"
-    if walmart is None:
-        walmart_output = " Could not find match for Walmart"
-        walmart = dict()
-        walmart['price'] = float('inf')
-    print(bestbuy_output, '\n')
+    items = ['Sears', 'Target', 'Amazon', 'BestBuy', 'Walmart'] # create a list of items to iterate over
+    # iterate through the list of items and update the progress bar
+    for item in tqdm(items):
+        time.sleep(0.1)  # simulate some work being done
+        # get the price for the current item
+        if item == 'Sears':
+            sears = get_price_sears(exchange_get)
+            if sears:
+                sears['price'] = format_price(sears['price'])
+                sears_output = f"Sears price:${sears['price']},{sears['url']}"
+            if sears is None:
+                sears_output = "Could not find match for Sears"
+                sears = dict()
+                sears['price'] = float('inf')
+
+        elif item == 'Target':
+            target = get_price_target(exchange_get)
+            if target:
+                target['price'] = format_price(target['price'])
+                target_output = f"Target price:${target['price']},{target['url']}"
+            if target is None:
+                target_output = "Could not find match for Target"
+                target = dict()
+                target['price'] = float('inf')
+
+        elif item == 'Amazon':
+            amazon = None
+            if amazon:
+                amazon_output = f"Amazon price:"
+            if amazon is None:
+                amazon_output = "Could not find match for Amazon"
+                amazon = float('inf')
+
+        elif item == 'BestBuy':
+            bestbuy = None
+            if bestbuy:
+                bestbuy_output = f"Bestbuy price:"
+            if bestbuy is None:
+                bestbuy_output = "Could not find match for BestBuy"
+                bestbuy = float('inf')
+
+        elif item == 'Walmart':
+            walmart = get_price_walmart(exchange_get)
+            if walmart:
+                walmart['price'] = format_price(walmart['price'])
+                walmart_output = f"Walmart price:${walmart['price']}, {walmart['url']}"
+            if walmart is None:
+                walmart_output = " Could not find match for Walmart"
+                walmart = dict()
+                walmart['price'] = float('inf')
+    os.system('cls' if os.name == 'nt' else 'clear')
     print(sears_output, '\n')
     print(target_output, '\n')
-    print(walmart_output, '\n')
     print(amazon_output, '\n')
+    print(bestbuy_output, '\n')
+    print(walmart_output, '\n')
+
     user_price = lowest_price(bestbuy, sears['price'], target['price'], amazon, walmart['price'], product_price)
     print(f"The best price for your search based on all the retail stores was ${user_price}", '\n')
     print(f"Do you want your search results? (Y)es or (N)o?")
     user_input = input(">")
     if user_input.lower() == "y":
         data_email(amazon_output, bestbuy_output, sears_output, target_output, walmart_output, exchange_message)
-
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def lowest_price(a,b,c,d,e,f):
     return min(a,b,c,d,e,f)
