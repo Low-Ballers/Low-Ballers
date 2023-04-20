@@ -235,5 +235,6 @@ $RECYCLE.BIN/
 # pyteset folders and files
 .pytest_cache
 __pycache__
+.coverage
 
 # End of https://www.gitignore.io/api/node,macos,linux,windows,webstorm,visualstudiocode
