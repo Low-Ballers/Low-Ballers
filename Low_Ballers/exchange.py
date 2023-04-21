@@ -3,6 +3,17 @@ from bs4 import BeautifulSoup
 import re
 
 def exchange_main(url_input):
+    '''
+    Main exchange web scraping function
+    Takes in a URL of a product from ShopMyExchange.com
+    Returns a dict with product information
+        Parameters:
+            url
+
+        Returns:
+            dict
+    '''
+
     output_dict = dict()
 
     spec_dict = get_specs(url_input)
@@ -49,8 +60,6 @@ def get_specs(url_input):
     div_bs4_elements = soup.find_all("div")
 
     # Loop: find any div with this.
-    # Problem: there are divs within divs that contain this.
-
     div_list = []
 
     for div in div_bs4_elements:
@@ -108,7 +117,7 @@ def get_model_from_overview(url_input):
 
 def get_title(url_input):
     '''
-    Gets title from the a product from shop my exchange
+    Gets title from a product from shop my exchange
         Parameters:
             url_input of product from shop my exchange
 
@@ -130,8 +139,5 @@ if __name__ == "__main__": # pragma: no cover
     # url = 'https://www.shopmyexchange.com/ninja-professional-plus-blender-with-auto-iq/2392119'
     # url = 'https://www.shopmyexchange.com/nike-men-s-revolution-6-running-shoes/2724994'
     # url = 'https://www.shopmyexchange.com/apple-11-in-512gb-ipad-pro-with-wi-fi-only/3437062'
-    url = 'https://www.shopmyexchange.com/non-existent-product/0000000'
-    # print(main(url))
-    # print(get_specs(url))
-    # print(get_model_from_overview(url))
+    # url = 'https://www.shopmyexchange.com/non-existent-product/0000000'
     print(exchange_main(url))

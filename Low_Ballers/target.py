@@ -5,6 +5,15 @@ import time
 from playwright.sync_api import sync_playwright
 
 def get_price(product_dict):
+    '''
+    Scrapes target.com website for price and url of a product based on upc, model, or title
+        Parameters:
+            dict of product upc, model, and/or title
+
+        Returns:
+            dict of product price, url
+    '''
+
     price = get_product_page(product_dict)
     return price
 
