@@ -3,6 +3,15 @@ from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 
 def get_price(product_dict):
+    '''
+    Scrapes sears.com website for price and url of a product based on upc, model, or title
+        Parameters:
+            dict of product upc, model, and/or title
+
+        Returns:
+            dict of product price, url
+    '''
+
     # Get html
     soup, url = get_product_page(product_dict)
 
@@ -93,4 +102,4 @@ if __name__ == '__main__': # pragma: no cover
 
     print(get_price(tv))
     # print(get_price(ninja))
-    #print(get_price(nike))
+    # print(get_price(nike))

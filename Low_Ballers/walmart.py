@@ -9,6 +9,15 @@ api_key = os.getenv('API_KEY')
 
 
 def get_price(product_dict):
+    '''
+    Scrapes walmart.com website for price and url of a product based on upc, model, or title
+        Parameters:
+            dict of product upc, model, and/or title
+
+        Returns:
+            dict of product price, url
+    '''
+
     product = get_product_page(product_dict)
 
     if product:

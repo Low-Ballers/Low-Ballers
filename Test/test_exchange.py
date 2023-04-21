@@ -31,13 +31,11 @@ def test_get_html():
 
 
 def test_get_title():
-    # Test case 1: Valid URL input
     url_input = "https://www.shopmyexchange.com/nike-men-s-revolution-6-running-shoes/2724994"
     expected_title = "Nike Men's Revolution 6 Running Shoes "
     assert get_title(url_input) == expected_title
 
 def test_main_bad_url():
-    # Test case 1: Valid URL input
     url_input = "https://www.shopmyexchange.com/non-existent-product/0000000"
     actual = exchange_main(url_input)
     expected = {}

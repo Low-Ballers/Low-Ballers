@@ -9,4 +9,4 @@ def test_exists_data_email():
                'Target: 36.99 target.com/shop?=3243243242',
                'Walmart: price not available',
                'Exchange: $50.00 , www.exchange.com')
-    assert actual == None
+    assert actual is None

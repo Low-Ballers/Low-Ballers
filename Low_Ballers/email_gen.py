@@ -1,11 +1,18 @@
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox
 
 
 # create a root window
 def data_email(amazon, bestbuy, sears, target, walmart, exchange):
+    '''
+    Produces a pop-up window that displays the search results.
+    Allows user to copy-and-paste for future reference
+        Parameters:
+            amazon, bestbuy, sears, target, walmart, exchange (strings)
 
+        Returns:
+            None
+    '''
 
 
     message = f'''

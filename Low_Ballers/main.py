@@ -1,21 +1,27 @@
-
 from Low_Ballers.email_gen import data_email
 from Low_Ballers.exchange import exchange_main
 from Low_Ballers.sears import get_price as get_price_sears
 from Low_Ballers.target import get_price as get_price_target
 from Low_Ballers.walmart import get_price as get_price_walmart
 from prettytable.colortable import ColorTable, Themes
-from colored import fg, bg, attr
 from tqdm import tqdm
 import time
 import os
 
 product_price = 0
-# user_input = ''
 url = ''
 
+def intro(): # pragma: no cover
+    '''
+    Main Low Ballers program
+    Prompts user for url and price of a product found on ShopMyExchange.com
+    Displays prices for that product at 5 other competitor's websites
+        Parameters:
+            None
 
-def intro():
+        Returns:
+            None
+    '''
     user_input = ''
     print("\033[32m" + '''
                                         *,*..**,.                               
@@ -80,7 +86,7 @@ def intro():
 
 
 
-def prompt_for_input():
+def prompt_for_input(): # pragma: no cover
     global product_price
     global url
     print("Please enter the ShopMyExchange URl for the product you will like to search")
@@ -88,7 +94,7 @@ def prompt_for_input():
     user_input = input("Enter URL Here >")
     os.system('cls' if os.name == 'nt' else 'clear')
     url = user_input
-    #regex validate url
+    # FUTURE: regex validate url
     if user_input.lower() != '' and False:
         search_failed()
 
@@ -103,92 +109,12 @@ def prompt_for_input():
         product_price = price_input
         search_successful()
 
-
 def search_failed():
     global url
     print("We were not able to find any matches for your search")
 
 
-# def search_successful():
-#     global product_price
-#     global url
-#
-#     exchange_get = exchange_main(url)
-#
-#     sites = {
-#         'sears': get_price_sears(exchange_get),
-#         'target': get_price_target(exchange_get),
-#         'amazon': None,
-#         'bestbuy': None,
-#         'walmart': get_price_walmart(exchange_get)
-#     }
-#
-#     title = exchange_get['title']
-#     exchange_message = f" Your product was {title} at the price of ${product_price}"
-#     print(exchange_message)
-#     print("We were able to find the following matches for the best price :")
-#     print("Please wait while we search for you......", '\n')
-#     # if price comes back at not available , s
-#
-#     for item in tqdm(sites):
-#         if item:
-#             item['price'] = format_price(item['price'])
-#             sears_output = f"Sears price:${item['price']},{item['url']}"
-#
-#
-#
-#
-#     if sears:
-#         sears['price'] = format_price(sears['price'])
-#         sears_output = f"Sears price:${sears['price']},{sears['url']}"
-#
-#
-#     if sears is None:
-#         sears_output = "Could not find match for Sears"
-#         sears = dict()
-#         sears['price'] = float('inf')
-#
-#     if target:
-#         target['price'] = format_price(target['price'])
-#         target_output = f"Target price:${target['price']},{target['url']}"
-#     if target is None:
-#         target_output = "Could not find match for Target"
-#         target = dict()
-#         target['price'] = float('inf')
-#
-#     if amazon:
-#         amazon_output = f"Amazon price:"
-#     if amazon is None:
-#         amazon_output = "Did not try Amazon because APIs cost money"
-#         amazon = float('inf')
-#
-#     if bestbuy:
-#         bestbuy_output = f"Bestbuy price:"
-#     if bestbuy is None:
-#         bestbuy_output = "We are Low Ballers (i.e. broke ballers).  Did not try Bestbuy"
-#         bestbuy = float('inf')
-#
-#     if walmart:
-#         walmart['price'] = format_price(walmart['price'])
-#         walmart_output = f"Walmart price:${walmart['price']}, {walmart['url']}"
-#     if walmart is None:
-#         walmart_output = " Could not find match for Walmart"
-#         walmart = dict()
-#         walmart['price'] = float('inf')
-#     print(bestbuy_output, '\n')
-#     print(sears_output, '\n')
-#     print(target_output, '\n')
-#     print(walmart_output, '\n')
-#     print(amazon_output, '\n')
-#     user_price = lowest_price(bestbuy, sears['price'], target['price'], amazon, walmart['price'], product_price)
-#     print(f"The best price for your search based on all the retail stores was ${user_price}", '\n')
-#     print(f"Do you want your search results? (Y)es or (N)o?")
-#     user_input = input(">")
-#     if user_input.lower() == "y":
-#         data_email(amazon_output, bestbuy_output, sears_output, target_output, walmart_output, exchange_message)
-
-
-def search_successful():
+def search_successful(): # pragma: no cover
     global product_price
     global url
     exchange_get = exchange_main(url)
@@ -227,7 +153,7 @@ def search_successful():
             if amazon:
                 amazon_output = f"Amazon price:"
             if amazon is None:
-                amazon_output = "Could not find match for Amazon"
+                amazon_output = "Did not search Amazon.  APIs cost money"
                 amazon = float('inf')
 
         elif item == 'BestBuy':
@@ -235,7 +161,7 @@ def search_successful():
             if bestbuy:
                 bestbuy_output = f"Bestbuy price:"
             if bestbuy is None:
-                bestbuy_output = "Could not find match for BestBuy"
+                bestbuy_output = "We are Low Ballers (i.e. broke ballers).  Did not try Bestbuy"
                 bestbuy = float('inf')
 
         elif item == 'Walmart':
@@ -266,7 +192,7 @@ def lowest_price(a,b,c,d,e,f):
     return min(a,b,c,d,e,f)
 
 
-def more_info():
+def more_info(): # pragma: no cover
     print('''
     
 Here at Low Ballers we have created a application that allows you to price
@@ -281,7 +207,7 @@ Thanks for letting us serve you
 ''')
 
 
-def aboutus():
+def aboutus(): # pragma: no cover
     x = ColorTable(theme=Themes.OCEAN)
 
     x.field_names = ["Low Ballers", "Github", "LinkedIn", "Portfolio"]
@@ -295,7 +221,7 @@ def aboutus():
     pass
 
 
-def quit():
+def quit(): # pragma: no cover
     print("Thank you for letting us help you get the lowest price... Low Ballers for life")
     print('''
 ____________________________________
